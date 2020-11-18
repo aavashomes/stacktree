@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+	<html lang="zxx" class="no-js">
+	<head>
+		<!-- Mobile Specific Meta -->
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<!-- Favicon-->
+		<link rel="shortcut icon" href="logo.png">
+		<!-- Author Meta -->
+		<meta name="author" content="colorlib">
+		<!-- Meta Description -->
+		<meta name="description" content="">
+		<!-- Meta Keyword -->
+		<meta name="keywords" content="">
+		<!-- meta character set -->
+		<meta charset="UTF-8">
+		<link rel="shortcut icon" href="images/api2.png">
+		<title>Your API | API Stack</title>
+
+        	<script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.2.2/firebase-analytics.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-storage.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet">
+			<!--
+			CSS
+			============================================= -->
+			<link rel="stylesheet" href="css/linearicons.css">
+			<link rel="stylesheet" href="css/font-awesome.min.css">
+			<link rel="stylesheet" href="css/bootstrap.css">
+			<link rel="stylesheet" href="css/magnific-popup.css">
+			<link rel="stylesheet" href="css/nice-select.css">
+			<link rel="stylesheet" href="css/animate.min.css">
+			<link rel="stylesheet" href="css/owl.carousel.css">
+		
+			<link rel="stylesheet" href="css/main.css">
+			<!-- The core Firebase JS SDK is always required and must be listed first -->
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyCosWKerHNVXEWGz22sA7pYiMV1mK3kPR0",
+    authDomain: "mystacktree.firebaseapp.com",
+    databaseURL: "https://mystacktree.firebaseio.com",
+    projectId: "mystacktree",
+    storageBucket: "mystacktree.appspot.com",
+    messagingSenderId: "298986481865",
+    appId: "1:298986481865:web:c0bfd4c8c159caea054518"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+</script>
+		</head>
+		<body>
+		  <header id="header">
+		    <div class="container main-menu">
+		    	<div class="row align-items-center justify-content-between d-flex">
+			      <div id="logo">
+			        <a href="index.html"><h2>Stack Tree</h2>
+			      </div>
+			      <nav id="nav-menu-container">
+			        <ul class="nav-menu">
+			          <li><a href="index.html">Home <i class='fa fa-home'></i></a></li>
+
+			        </ul>
+			      </nav><!-- #nav-menu-container -->
+		    	</div>
+		    </div>
+		  </header><!-- #header -->
+
+			<!-- start banner Area -->
+			<br>
+			<section class="contact-page-area">
+				<div class="container">
+                    
+                   <div class="row">
+<!--TEXT-->
+						<div class="col-lg-8">
+                            <br><br><br>
+                           
+							<form class="form-area contact-form text-right"  action="javascript:writeuser()" method="POST">
+                                <!--ID : title, url, text, choose, file -->
+                                <div class="row">
+									<div class="col-lg-6 form-group">
+                                        <input id="title" type="text" placeholder="Enter Title" 
+                                        onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Title'" 
+                                        class="common-input mb-20 form-control" type="text"></input>
+                                        
+                                        <input id="url" type="url" placeholder="Enter URL" 
+                                        onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter URL'" 
+                                        class="common-input mb-20 form-control"></input>
+                                     
+                                          <textarea name="Text1" id="text" placeholder="Paste the TEXT" class=" mb-20 form-control" cols="60" rows="6"></textarea>
+                                          
+                                          <select id="choose" class="common-input mb-10 form-control" required>
+                                            <option value="TEXT" selected>TEXT</option>
+                                            <option value="LINKS">LINKS</option>
+                                            <option value="Image">Image</option>
+                                           
+                                          </select>
+                                          <input type="file" id="file1" accept="image/*" class="common-input mb-10 form-control">
+                                          <div class="col-lg-12">
+										<div class="alert-msg" style="text-align: left;"></div>
+										<button type="submit" class="primary-btn">Send Data</button>
+									</div>
+								</div>
+							</form>
+                        </div>
+                        <!--Links-->
+                        
+                    </div>
+                   
+			</section>
+			<!-- End contact-page Area -->
+
+            <!-- start footer Area -->
+<script>
+    function writeuser(){
+        var title=document.getElementById('title').value;
+        var url=document.getElementById('url').value;
+        var text=document.getElementById('text').value;
+        var choose=document.getElementById('choose').value;
+		var file=document.getElementById('file1');
+		var date=new Date().toLocaleDateString(['ban','id']);
+		var date2=new Date().toLocaleDateString('ko-KR');
+		
+		console.log(file);
+		var pic = file.files[0];
+		console.log(file);
+		//NOTE: 
+		var database = firebase.database();
+		
+		// TEXT
+		if(choose==="TEXT")
+		{
+			firebase.database().ref(choose)
+            .push().set({
+            Date:date,
+			Title:title,
+			Text:text
+			
+            });
+			//window.location.replace('index.html',true);
+			console.log("Inserted");
+            alert(text);
+		}
+		// LINKS
+		if(choose==="LINKS")
+		{
+			firebase.database().ref(choose)
+            .push().set({
+            Date:date,
+			Title:title,
+			Link:url
+			
+            });
+			//window.location.replace('index.html',true);
+			console.log("Inserted");
+            
+		}
+			// IMAGES
+			if(choose==="Image")
+		{
+			var name=Date.now(); 
+			var storageRef = firebase.storage().ref('/'+date2+'/'+name);
+		var uploadTask = storageRef.put(pic);
+
+uploadTask.on('state_changed', function(snapshot){
+  // Observe state change events such as progress, pause, and resume
+  // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+  var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+  console.log('Upload is ' + progress + '% done');
+  switch (snapshot.state) {
+    case firebase.storage.TaskState.PAUSED: // or 'paused'
+      console.log('Upload is paused');
+      break;
+    case firebase.storage.TaskState.RUNNING: // or 'running'
+      console.log('Upload is running');
+      break;
+  }
+}, function(error) {
+  // Handle unsuccessful uploads
+}, function() {
+  // Handle successful uploads on complete
+  // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+  uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+	console.log('File available at', downloadURL);
+	firebase.database().ref(choose)
+            .push().set({
+            Date:date,
+			Title:title,
+			Link:downloadURL
+			
+			});
+  });
+});
+            
+		}
+    }
+</script>
+            <!-- End footer Area -->
+	
+
+  			
+		</body>
+	</html>
