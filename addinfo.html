@@ -14,7 +14,7 @@
 		<!-- meta character set -->
 		<meta charset="UTF-8">
 		<link rel="shortcut icon" href="images/api2.png">
-		<title>Your API | API Stack</title>
+		<title>Your API | Stack Tree</title>
 
         	<script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-auth.js"></script>
@@ -98,10 +98,11 @@
                                           <select id="choose" class="common-input mb-10 form-control" required>
                                             <option value="TEXT" selected>TEXT</option>
                                             <option value="LINKS">LINKS</option>
-                                            <option value="Image">Image</option>
+											<option value="Image">Image</option>
+											<option value="FILES">Files</option>
                                            
                                           </select>
-                                          <input type="file" id="file1" accept="image/*" class="common-input mb-10 form-control">
+                                          <input type="file" id="file1" class="common-input mb-10 form-control">
                                           <div class="col-lg-12">
 										<div class="alert-msg" style="text-align: left;"></div>
 										<button type="submit" class="primary-btn">Send Data</button>
@@ -166,6 +167,44 @@
 		{
 			var name=Date.now(); 
 			var storageRef = firebase.storage().ref('/'+date2+'/'+name);
+		var uploadTask = storageRef.put(pic);
+
+uploadTask.on('state_changed', function(snapshot){
+  // Observe state change events such as progress, pause, and resume
+  // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+  var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+  console.log('Upload is ' + progress + '% done');
+  switch (snapshot.state) {
+    case firebase.storage.TaskState.PAUSED: // or 'paused'
+      console.log('Upload is paused');
+      break;
+    case firebase.storage.TaskState.RUNNING: // or 'running'
+      console.log('Upload is running');
+      break;
+  }
+}, function(error) {
+  // Handle unsuccessful uploads
+}, function() {
+  // Handle successful uploads on complete
+  // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+  uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+	console.log('File available at', downloadURL);
+	firebase.database().ref(choose)
+            .push().set({
+            Date:date,
+			Title:title,
+			Link:downloadURL
+			
+			});
+  });
+});
+            
+		}
+				// FILES
+				if(choose==="FILES")
+		{
+			var name=Date.now(); 
+			var storageRef = firebase.storage().ref('/'+'FILES'+'/'+date2+'/'+name);
 		var uploadTask = storageRef.put(pic);
 
 uploadTask.on('state_changed', function(snapshot){

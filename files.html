@@ -121,7 +121,7 @@ z-index: 99999;
       padding: 16px;
       text-align: center;
       background-color: #f1f1f1;
-height: 156px;
+height: 126px;
     overflow-y: auto;
     }
     </style>
@@ -155,7 +155,7 @@ height: 156px;
                 <li><a href="images.html">Image </a></li>
                 <li><a href="text.html">Texts</a></li>
                 <li><a href="files.html">Files</a></li>
-						<li><a href="addinfo.html">Add Data<i class='fa fa-file-alt'></i></a></li>
+						<li><a href="addinfo.html">Add Data <i class='fa fa-file-alt'></i></a></li>
 
 			        </ul>
 			      </nav><!-- #nav-menu-container -->
@@ -170,7 +170,7 @@ height: 156px;
 					<div class="row d-flex align-items-center justify-content-center">
 						<div class="about-content col-sm-4">
 							<h1 class="text-white">
-								TEXT
+								FILES
 							</h1>
 
 						</div>
@@ -179,33 +179,24 @@ height: 156px;
         </section>
 					<div id="loader"></div>
         <script>
- 
- var playersRef = firebase.database().ref("TEXT/");
 
-playersRef.on("child_added", function(data, prevChildKey) {
-   var newPlayer = data.val();
- $("#enter").append(" <div class='column'>"+" <div class='card'>"
-+"<br><h6><b>"+newPlayer.Title+ "</b></h6><br>"+
-"<button type='button' style='margin:2px;font-size:10px' class='btn btn-info' data-toggle='modal' data-target=#"+newPlayer.Title+">Know More</button>"+
-"<span style='color:#17202A'>"+newPlayer.Date+"</span>"+  
-"<div class='modal fade' id="+newPlayer.Title+" role='dialog'>"+
-    "<div class='modal-dialog'>"+
-    
-      "<div class='modal-content'>"+
-        "<div class='modal-body'>"+
-"<h6>"+newPlayer.Text+"</h6>"+
 
-        "</div>"+
-       " <div class='modal-footer'>"+
-          "<button type='button' style='font-size:10px' class='btn btn-default' data-dismiss='modal'>Close</button>"+
-       " </div>"+
-      "</div>"+
-      
-    "</div>"+
-  "</div>"+  
-  "</div>"+"</div>");
+        var playersRef = firebase.database().ref("FILES/");
 
-});
+        playersRef.on("child_added", function(data, prevChildKey) {
+           var newPlayer = data.val();
+           console.log("Title: " + newPlayer.Title);
+           console.log("Image URL: " + newPlayer.Link);
+         $("#enter").append("<div class='column'>"+" <div class='card'>"
+        + //"<img src="+newPlayer.Link+" style='width:50%;margin-left:auto;margin-right:auto'></img>"+
+        "<h6>"+newPlayer.Title+"</h6><br>"+
+        
+        "<a href="+newPlayer.Link+"><button type='button' style='font-size:13px;margin:2px;text-align:center'class='btn btn-info'>"+"<i class='fas fa-download'></i> Download</button></a>"+
+        "<span style='color:#17202A'>"+newPlayer.Date+"</span>"+
+          "</div>"+
+          "</div>");
+
+        });
             </script>
 <br>
 <section  >
